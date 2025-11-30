@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class Persona
+    public  class Persona
     {
-        public int Id { get; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
-        public DateTime FechaNacimiento { get; set; }
-        public string Direccion { get; set; }
         public string Telefono { get; set; }
+        public string Direccion { get; set; }
+        public string foto { get; set; }
+        public DateTime FechaNacimiento { get; set; }
+        public int IdDepartamento { get; set; }
 
-        Persona(int id, string nombre, string apellidos, DateTime fechaNacimiento, string direccion, string telefono)
+        public Persona(int id, string nombre, string apellidos, DateTime fechaNacimiento, string direccion, string telefono, int idDepartamento, string foto)
         {
             Id = id;
             Nombre = nombre;
@@ -23,8 +25,12 @@ namespace Domain.Entities
             FechaNacimiento = fechaNacimiento;
             Direccion = direccion;
             Telefono = telefono;
+            this.IdDepartamento = idDepartamento;
+            this.foto = foto;
         }
 
-        
+        public Persona() { }
+
+
     }
 }
