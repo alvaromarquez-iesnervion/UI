@@ -37,9 +37,21 @@ namespace Domain.usecases
 
         public PersonaConListadoDepartamento getPersonaConListadoDepartamento(int id)
         {
-            var persona = _personaRepository.getPersonaByID(id);
-            PersonaConListadoDepartamento dto = new PersonaConListadoDepartamento(persona, _departamentoRepository.getAllDepartamentos());
-            return dto;
+            var persona = new Persona();
+            PersonaConListadoDepartamento dto = new PersonaConListadoDepartamento();
+
+            if (id == 0)
+            {
+                dto = new PersonaConListadoDepartamento();
+                dto.listadoDepartamentos = _departamentoRepository.getAllDepartamentos();
+                dto.FechaNacimiento = DateTime.Now;
+            }
+            else
+            {
+                persona = _personaRepository.getPersonaByID(id);
+                 dto = new PersonaConListadoDepartamento(persona, _departamentoRepository.getAllDepartamentos());
+            }
+                return dto;
 
         }
 

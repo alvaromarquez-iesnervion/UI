@@ -31,7 +31,7 @@ namespace UI.Controllers
 
         public IActionResult Create()
         {
-            var personaConDepartamentos = _personaRepositoryUsecase.getPersonaConListadoDepartamento(5);
+            var personaConDepartamentos = _personaRepositoryUsecase.getPersonaConListadoDepartamento(0);
 
             return View(personaConDepartamentos);
         }
@@ -42,7 +42,7 @@ namespace UI.Controllers
         {
             Persona persona = new Persona
             {
-                Id = personaConListado.Id,
+                Id = 0,
                 Nombre = personaConListado.Nombre,
                 Apellidos = personaConListado.Apellidos,
                 FechaNacimiento = personaConListado.FechaNacimiento,
@@ -67,32 +67,30 @@ namespace UI.Controllers
         [HttpPost]
         public IActionResult Edit(PersonaConListadoDepartamento model)
         {
-            if (ModelState.IsValid)
-            {
-                
-                Persona persona = new Persona
-                {
-                    Id = model.Id,
-                    Nombre = model.Nombre,
-                    Apellidos = model.Apellidos,
-                    FechaNacimiento = model.FechaNacimiento,
-                    Direccion = model.Direccion,
-                    Telefono = model.Telefono,
-                    IdDepartamento = model.IdDepartamentoSeleccionado,
-                    foto = model.foto
-                };
+            
+             Persona persona = new Persona
+             {
+                 Id = model.Id,
+                 Nombre = model.Nombre,
+                 Apellidos = model.Apellidos,
+                 FechaNacimiento = model.FechaNacimiento,
+                 Direccion = model.Direccion,
+                 Telefono = model.Telefono,
+                 IdDepartamento = model.IdDepartamentoSeleccionado,
+                 foto = model.foto
+             };
 
-                _personaRepositoryUsecase.updatePersona(model.Id, persona);
-                return RedirectToAction("Index");
-            }
-            return View(model);
+            _personaRepositoryUsecase.updatePersona(model.Id, persona);
+            return RedirectToAction("Index");
         }
+        
 
         public IActionResult Delete(int id)
         {
             var persona = _personaRepositoryUsecase.getPersonaConNombreDepartamento(id);
             return View(persona);
         }
+        
         [HttpPost]
         [ActionName("Delete")]
         public IActionResult PostDelete(PersonaConListadoDepartamento persona)

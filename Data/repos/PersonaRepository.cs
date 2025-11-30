@@ -143,7 +143,8 @@ namespace Data.repos
             {
                 connection = _connectionManager.getConnection();
                 command = new SqlCommand(
-                    "ISERT INTO Personas (@Nombre, @Apellidos, @Telefono, @Direccion, @Foto,@FechaNacimiento, @IDDepartamento) ", connection);
+                    "INSERT INTO Personas (Nombre, Apellidos, Telefono, Direccion, Foto, FechaNacimiento, IDDepartamento) " +
+                    "VALUES (@Nombre, @Apellidos, @Telefono, @Direccion, @Foto, @FechaNacimiento, @IDDepartamento)", connection);
                 command.Parameters.AddWithValue("@Nombre", persona.Nombre);
                 command.Parameters.AddWithValue("@Apellidos", persona.Apellidos);
                 command.Parameters.AddWithValue("@FechaNacimiento", persona.FechaNacimiento);
