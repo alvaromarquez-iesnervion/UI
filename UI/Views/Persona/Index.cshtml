@@ -64,8 +64,16 @@
                 @Html.DisplayFor(modelItem => item.NombreDepartamento)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.foto)
+                @if (!string.IsNullOrEmpty(item.foto))
+                {
+                    <img src="@item.foto" style="width:80px; height:auto; border-radius:6px;" />
+                }
+                else
+                {
+                    <span>Sin foto</span>
+                }
             </td>
+
             <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |

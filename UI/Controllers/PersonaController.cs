@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Domain.interfaces.usecases;
-using Domain.interfaces.repos;
-using Domain.usecases;
 using Domain.Entities;
 using Domain.DTOs;
+using UI.Mappers;
 
 namespace UI.Controllers
 {
@@ -14,6 +13,7 @@ namespace UI.Controllers
         public PersonaController(IPersonaRepositoryUsecase personaRepositoryUsecase)
         {
             _personaRepositoryUsecase = personaRepositoryUsecase;
+
         }
 
         public IActionResult Index()
@@ -40,17 +40,8 @@ namespace UI.Controllers
         [HttpPost]
         public IActionResult Create(PersonaConListadoDepartamento personaConListado)
         {
-            Persona persona = new Persona
-            {
-                Id = 0,
-                Nombre = personaConListado.Nombre,
-                Apellidos = personaConListado.Apellidos,
-                FechaNacimiento = personaConListado.FechaNacimiento,
-                Direccion = personaConListado.Direccion,
-                Telefono = personaConListado.Telefono,
-                foto = personaConListado.foto,
-                IdDepartamento = personaConListado.IdDepartamentoSeleccionado
-            };
+            Persona persona = DTOtoPersona.personaConListadoDepartamentoToPersona(personaConListado);
+
 
             _personaRepositoryUsecase.createPersona(persona);
             return RedirectToAction("Index");
@@ -68,17 +59,7 @@ namespace UI.Controllers
         public IActionResult Edit(PersonaConListadoDepartamento model)
         {
             
-             Persona persona = new Persona
-             {
-                 Id = model.Id,
-                 Nombre = model.Nombre,
-                 Apellidos = model.Apellidos,
-                 FechaNacimiento = model.FechaNacimiento,
-                 Direccion = model.Direccion,
-                 Telefono = model.Telefono,
-                 IdDepartamento = model.IdDepartamentoSeleccionado,
-                 foto = model.foto
-             };
+             Persona persona = DTOtoPersona.personaConListadoDepartamentoToPersona(model);
 
             _personaRepositoryUsecase.updatePersona(model.Id, persona);
             return RedirectToAction("Index");
