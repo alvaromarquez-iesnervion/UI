@@ -27,8 +27,8 @@ namespace UI.Controllers
 
         public IActionResult Create()
         {
-            var departamento = new Departamento();
-            return View(departamento);
+           
+            return View();
 
         }
         [HttpPost]

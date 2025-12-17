@@ -25,10 +25,7 @@ namespace Data.repos
         {
             _connectionManager = new clsMyConnection();
         }
-        /// <summary>
-        /// Obtiene todas las personas de la base de datos
-        /// </summary>
-        /// <returns>Lista de Personas/returns>
+        
         public List<Persona> getAllPersonas()
         {
             List<Persona> personas = new List<Persona>();
