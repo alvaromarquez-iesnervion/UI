@@ -7,6 +7,7 @@ using Domain.interfaces.repos;
 
 namespace Infrastructure.Repositories
 {
+    
     public class DepartamentoRepository : IDepartamentoRepository
     {
         private readonly clsMyConnection _connectionManager;

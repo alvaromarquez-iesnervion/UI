@@ -20,10 +20,7 @@ namespace Domain.usecases
             _personaRepository = personaRepository;
             _departamentoRepository = departamentoRepository;
         }
-        /// <summary>
-        /// Este metodo crea una lista de PersonaConNombreDepartamento 
-        /// </summary>
-        /// <returns>una lista de personas con el nombre del departamento en lugar del id</returns>
+        
         public List<PersonaConNombreDepartamento> getAllPersonasConNombreDepartamento()
         {
             List<PersonaConNombreDepartamento> personaConNombreDepartamento = new List<PersonaConNombreDepartamento>();

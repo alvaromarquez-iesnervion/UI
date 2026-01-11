@@ -29,6 +29,7 @@ namespace Domain.DTOs
             Telefono = persona.Telefono;
             listadoDepartamentos = departamentos;
             foto = persona.foto;
+            IdDepartamentoSeleccionado = persona.IdDepartamento;
         }
 
         public PersonaConListadoDepartamento()

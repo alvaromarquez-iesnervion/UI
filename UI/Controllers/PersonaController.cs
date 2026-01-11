@@ -9,39 +9,39 @@ namespace UI.Controllers
     public class PersonaController : Controller
     {
         private readonly IPersonaRepositoryUsecase _personaRepositoryUsecase;
+        private readonly IDepartamentoRepositoryUsecase _departamentoRepositoryUsecase;
 
-        public PersonaController(IPersonaRepositoryUsecase personaRepositoryUsecase)
+        public PersonaController(
+            IPersonaRepositoryUsecase personaRepositoryUsecase,
+            IDepartamentoRepositoryUsecase departamentoRepositoryUsecase)
         {
             _personaRepositoryUsecase = personaRepositoryUsecase;
-
+            _departamentoRepositoryUsecase = departamentoRepositoryUsecase;
         }
 
         public IActionResult Index()
         {
-            var personas = _personaRepositoryUsecase.getAllPersonasConNombreDepartamento();
+            List<PersonaConNombreDepartamento> personas = _personaRepositoryUsecase.getAllPersonasConNombreDepartamento();
             return View(personas);
         }
 
         public IActionResult Details(int id)
         {
-            var persona = _personaRepositoryUsecase.getPersonaConNombreDepartamento(id);
-
+            PersonaConNombreDepartamento persona = _personaRepositoryUsecase.getPersonaConNombreDepartamento(id);
             return View(persona);
         }
 
         public IActionResult Create()
         {
-            var personaConDepartamentos = _personaRepositoryUsecase.getPersonaConListadoDepartamento(0);
-
-            return View(personaConDepartamentos);
+            List<Departamento> departamentos= _departamentoRepositoryUsecase.getAllDepartamentos();
+            ViewBag.ListadoDepartamentos = departamentos;
+            return View();
         }
 
 
         [HttpPost]
-        public IActionResult Create(PersonaConListadoDepartamento personaConListado)
+        public IActionResult Create(Persona persona)
         {
-            Persona persona = DTOtoPersona.personaConListadoDepartamentoToPersona(personaConListado);
-
 
             _personaRepositoryUsecase.createPersona(persona);
             return RedirectToAction("Index");
@@ -50,25 +50,25 @@ namespace UI.Controllers
 
         public IActionResult Edit(int id)
         {
-            var persona = _personaRepositoryUsecase.getPersonaConListadoDepartamento(id);
+            PersonaConListadoDepartamento persona = _personaRepositoryUsecase.getPersonaConListadoDepartamento(id);
             return View(persona);
         }
-
+        
         
         [HttpPost]
-        public IActionResult Edit(PersonaConListadoDepartamento model)
+        public IActionResult Edit(PersonaConListadoDepartamento personaConListadoDepartamento)
         {
             
-             Persona persona = DTOtoPersona.personaConListadoDepartamentoToPersona(model);
+             Persona persona = DTOtoPersona.personaConListadoDepartamentoToPersona(personaConListadoDepartamento);
 
-            _personaRepositoryUsecase.updatePersona(model.Id, persona);
+            _personaRepositoryUsecase.updatePersona(personaConListadoDepartamento.Id, persona);
             return RedirectToAction("Index");
         }
         
 
         public IActionResult Delete(int id)
         {
-            var persona = _personaRepositoryUsecase.getPersonaConNombreDepartamento(id);
+            PersonaConNombreDepartamento persona = _personaRepositoryUsecase.getPersonaConNombreDepartamento(id);
             return View(persona);
         }
         
