@@ -56,7 +56,7 @@ namespace UI.Controllers.API
             {
                 persona = _personaRepositoryUsecase.getPersonaConNombreDepartamento(id);
                 if (persona == null)
-                {
+                {   
                     salida = NoContent();
                 }
                 else
@@ -94,25 +94,34 @@ namespace UI.Controllers.API
         // PUT api/<PersonasController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] PersonaConListadoDepartamento personaConListadoDepartamento)
-        {   
+        {
             IActionResult salida;
-            Persona persona = new Persona();
+            Persona persona = DTOtoPersona.personaConListadoDepartamentoToPersona(personaConListadoDepartamento);
 
             try
             {
-                persona = DTOtoPersona.personaConListadoDepartamentoToPersona(personaConListadoDepartamento);
-                _personaRepositoryUsecase.updatePersona(id, persona);
-                salida = CreatedAtAction(nameof(Get), new { id = persona.Id }, persona);
+                var personaExistente = _personaRepositoryUsecase.getPersonaConNombreDepartamento(id);
+
+                if (personaExistente == null)
+                {
+                    persona.Id = id; 
+                    _personaRepositoryUsecase.createPersona(persona);
+                    salida = CreatedAtAction(nameof(Get), new { id = persona.Id }, persona);
+                }
+                else
+                {
+                    _personaRepositoryUsecase.updatePersona(id, persona);
+                    salida = Ok(persona); 
+                }
             }
             catch
             {
                 salida = BadRequest();
-
             }
 
             return salida;
-
         }
+
 
         // DELETE api/<PersonasController>/5
         [HttpDelete("{id}")]
